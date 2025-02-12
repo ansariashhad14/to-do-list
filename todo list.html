@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("https://tse3.mm.bing.net/th?id=OIP.9xjCntPpSQfplps_Hm4EDwHaE7&pid=Api&P=0&h=180") no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main {
+            background: #ffffff;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            padding: 20px;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: crimson;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            display: flex;
+           flex-direction: column; 
+            width: 100%;
+            max-width: 350px;
+            /* margin: 0 auto; */
+            gap: 10px;
+            
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 28px;
+            font-size: 50px;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+            outline: none;
+            width: 100%;
+            height: 30px;
+            
+        }
+
+        button.add-btn {
+            padding: 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size: 18px;
+            width: 100%;
+        }
+
+        button.add-btn:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 50vh;
+            margin-top: 10px;
+        }
+        input.margin{
+      padding-right: 30px;
+        }
+
+        li {
+            background: rgb(32, 30, 30);
+            padding: 10px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            color: white;
+            width: 90%;
+            /* margin: 0 auto; */
+        }
+
+        li span {
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        li button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            transition: 0.3s ease;
+            margin-left: 10px;
+        }
+
+        li button:hover {
+            color: crimson;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+            }
+
+            .main {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+                padding: 10px;
+                justify-content: flex-start;
+            }
+
+            h1 {
+                font-size: 28px;
+                font-weight: 900;
+                color: black;
+            }
+
+            .input-container {
+                width: calc(100% - 20px);
+            }
+
+            ul {
+                max-height: calc(100vh - 250px);
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            input[type="text"] {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button.add-btn {
+                padding: 8px 10px;
+                font-size: 16px;
+            }
+
+            li {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>To-Do-App</h1>
+        <div class="input-container">
+            <input type="text" id="task" placeholder="Add Task" class="margin">
+            <button class="add-btn" onclick="addTask()">Add Task</button>
+        </div>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            let task = document.getElementById('task');
+            let taskValue = task.value.trim();
+
+            if (taskValue === "") {
+                alert("Please Enter a Task");
+                return;
+            }
+
+            let li = document.createElement("li");
+            li.innerHTML = `<span>${taskValue}</span> 
+                <button onclick="updateTask(this)"><i class="fa-solid fa-pen-to-square"></i></button> 
+                <button onclick="removeTask(this)"><i class="fa-regular fa-trash-can"></i></button>`;
+            document.getElementById("todo-list").appendChild(li);
+
+            task.value = "";
+            task.focus();
+        }
+
+        function removeTask(button) {
+            button.parentElement.remove();
+        }
+
+        function updateTask(button) {
+            let taskText = button.parentElement.querySelector("span");
+            let newTask = prompt("Update Task", taskText.textContent.trim());
+
+            if (newTask !== null && newTask.trim() !== '') {
+                taskText.textContent = newTask;
+            }
+        }
+    </script>
+</body>
+</html>
